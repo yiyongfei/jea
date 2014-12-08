@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ea</groupId>
+    <artifactId>architecture</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>architecture-cache</artifactId>
+  <dependencies>
+  	<!-- 缓存服务器支持，Redis和Memcached -->
+  	<dependency>
+	    <groupId>redis.clients</groupId>
+	    <artifactId>jedis</artifactId>
+	    <version>${jedis.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.googlecode.xmemcached</groupId>
+	    <artifactId>xmemcached</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+  	<dependency>
+	    <groupId>com.ea</groupId>
+	    <artifactId>architecture-core</artifactId>
+	    <version>0.0.1</version>
+    </dependency>
+  </dependencies>
+</project>

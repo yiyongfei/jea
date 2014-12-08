@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ea</groupId>
+    <artifactId>architecture</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>architecture-ws</artifactId>
+  <dependencies>
+      	<!-- Rest -->
+	    <dependency>  
+		    <groupId>javax.ws.rs</groupId>  
+		    <artifactId>javax.ws.rs-api</artifactId>  
+		    <version>${javax.ws.rs.version}</version>  
+		</dependency>  
+	  	<!-- Webservice支持，支持SOAP和REST -->
+	    <dependency>  
+	        <groupId>org.apache.cxf</groupId>  
+	        <artifactId>cxf-rt-frontend-jaxws</artifactId>  
+	        <version>${cxf.version}</version>  
+	    </dependency>
+	    <dependency>  
+	        <groupId>org.apache.cxf</groupId>  
+	        <artifactId>cxf-rt-frontend-jaxrs</artifactId>  
+	        <version>${cxf.version}</version>  
+	    </dependency>
+        <!-- Web应用支持 -->
+		<!-- dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>servlet-api</artifactId>
+	        <version>${servlet.version}</version>
+		</dependency -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>${httpclient.version}</version>
+		</dependency>
+	    <dependency>
+	        <groupId>com.ea</groupId>
+	        <artifactId>architecture-core</artifactId>
+	        <version>0.0.1</version>
+	    </dependency>
+  </dependencies>
+</project>

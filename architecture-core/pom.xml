@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ea</groupId>
+    <artifactId>architecture</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>architecture-core</artifactId>
+  <dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+    </dependency>  
+    <!-- spring framework -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+     <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-expression</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${spring.version}</version>
+    </dependency>    
+    <!-- 日志 -->
+    <dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>${logback.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-core</artifactId>
+	    <version>${logback.version}</version>
+	</dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    
+	<!-- AspectJ -->
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectj.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectj.version}</version>
+    </dependency>
+    
+	<!-- JSON支持 -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	<dependency>  
+	    <groupId>com.fasterxml.jackson.dataformat</groupId>  
+	    <artifactId>jackson-dataformat-xml</artifactId>  
+	    <version>${jackson.version}</version>  
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.jaxrs</groupId>
+	    <artifactId>jackson-jaxrs-json-provider</artifactId>
+	    <version>${jackson.version}</version>
+	</dependency>
+	
+	<!-- 序列化支持 -->
+	<dependency>
+	    <groupId>com.esotericsoftware</groupId>
+	    <artifactId>kryo</artifactId>
+	    <version>${kryo.version}</version>
+	</dependency>
+
+    <!-- Jodd支持，主要用于类型转换和读取Prop配置文件 -->
+	<dependency>
+	    <groupId>org.jodd</groupId>
+	    <artifactId>jodd-core</artifactId>
+	    <version>${jodd.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jodd</groupId>
+	    <artifactId>jodd-bean</artifactId>
+	    <version>${jodd.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jodd</groupId>
+	    <artifactId>jodd-props</artifactId>
+	    <version>${jodd.version}</version>
+	</dependency>
+
+	<!-- ActiveMQ支持，注意activemq-all里的slf引用，与storm有冲突，不建议直接使用 -->
+	<dependency>
+	    <groupId>org.apache.activemq</groupId>
+	    <artifactId>activemq-pool</artifactId>
+	    <version>${activemq.version}</version>
+	</dependency>	  
+  </dependencies>
+</project>

@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+    	<groupId>com.ea</groupId>
+    	<artifactId>architecture</artifactId>
+    	<version>0.0.1</version>
+    </parent>
+    <artifactId>architecture-orm</artifactId>
+    <dependencies>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-orm</artifactId>
+	        <version>${spring.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-jdbc</artifactId>
+	        <version>${spring.version}</version>
+	    </dependency>
+	    <!-- 数据库连接支持 -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>${druid.version}</version>
+		</dependency>
+		
+	    <!-- mybatis spring支持 -->
+	    <dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>${mybatis.version}</version>
+		</dependency>
+	    <dependency>
+	        <groupId>org.mybatis</groupId>
+	        <artifactId>mybatis-spring</artifactId>
+	        <version>${mybatis.spring.version}</version>
+	    </dependency>
+	    
+	    <!-- hibernate支持 -->
+	    <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-core</artifactId>
+	        <version>${hibernate.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-entitymanager</artifactId>
+	        <version>${hibernate.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.javassist</groupId>
+	        <artifactId>javassist</artifactId>
+	        <version>${javassist.version}</version>
+	    </dependency>
+	    
+	    <dependency>
+	        <groupId>com.ea</groupId>
+	        <artifactId>architecture-core</artifactId>
+	        <version>0.0.1</version>
+	    </dependency>
+    </dependencies>
+</project>
