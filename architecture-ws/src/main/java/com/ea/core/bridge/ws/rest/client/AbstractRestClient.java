@@ -168,9 +168,9 @@ public abstract class AbstractRestClient extends AbstractClient {
             .setStaleConnectionCheckEnabled(true)
             .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
             .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC))
-            .setConnectionRequestTimeout(500)
-            .setConnectTimeout(500)
-            .setSocketTimeout(500)
+            .setConnectionRequestTimeout(3000)
+            .setConnectTimeout(3000)
+            .setSocketTimeout(3000)
             .build();
 
         client = HttpClients.custom()

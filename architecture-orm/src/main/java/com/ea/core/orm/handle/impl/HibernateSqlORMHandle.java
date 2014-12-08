@@ -83,7 +83,7 @@ public class HibernateSqlORMHandle extends AbstractORMHandle {
 
 	@Override
 	public void setNextHandle() {
-		ORMHandle nextHandle = (HibernateSqlORMHandle)this.context.getBean("mybabisSqlORMHandle");
+		ORMHandle nextHandle = (MybatisSqlORMHandle)this.context.getBean("mybatisSqlORMHandle");
 		this.setNextHandle(nextHandle);
 	}
 	

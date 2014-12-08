@@ -27,9 +27,9 @@ import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
 @Component
-public class MybabisSqlORMHandle extends AbstractORMHandle {
+public class MybatisSqlORMHandle extends AbstractORMHandle {
     
-	public MybabisSqlORMHandle() {
+	public MybatisSqlORMHandle() {
 		super(ORMConstants.ORM_LEVEL.M_SQL.getCode());
 	}
 
