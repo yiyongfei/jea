@@ -32,7 +32,6 @@ import com.ea.core.storm.StormDefinition;
 import com.ea.core.storm.TopologyDefinition;
 import com.ea.core.storm.topology.ITopology;
 
-
 @Component
 public class BridgeContext implements ApplicationContextAware{
 	private Logger logger = LoggerFactory.getLogger(BridgeContext.class);
