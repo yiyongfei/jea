@@ -43,6 +43,9 @@ public class RedisClient {
 	}
 	
 	public void set(Map<String, String> map){
+		set(map, -1);
+	}
+	public void set(Map<String, String> map, int seconds){
 		JedisCommands jedisCommands = pool.getResource();
 		Iterator<String> it = map.keySet().iterator();
 		String key;
@@ -50,6 +53,9 @@ public class RedisClient {
 			while(it.hasNext()){
 				key = it.next();
 				jedisCommands.set(key, map.get(key));
+				if(seconds >= 0){
+					jedisCommands.expire(key, seconds);
+				}
 			}
 		} finally {
 			pool.returnResource(jedisCommands);
@@ -58,9 +64,17 @@ public class RedisClient {
 	}
 	
 	public boolean set(String key, String value){
+		set(key, value, -1);
+		return true;
+	}
+	
+	public boolean set(String key, String value, int seconds){
 		JedisCommands jedisCommands = pool.getResource();
 		try{
 			jedisCommands.set(key, value);
+			if(seconds >= 0){
+				jedisCommands.expire(key, seconds);
+			}
 		} finally {
 			pool.returnResource(jedisCommands);
 		}
