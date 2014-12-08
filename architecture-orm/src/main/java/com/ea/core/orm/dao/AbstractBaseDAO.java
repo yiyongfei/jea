@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ea.core.base.CoreDefinition;
 import com.ea.core.base.pk.BasePK;
 import com.ea.core.base.po.BasePO;
 import com.ea.core.orm.handle.ORMConstants;
@@ -58,7 +59,7 @@ public abstract class AbstractBaseDAO implements BaseDAO{
 	}
 	
 	public void checkConnection() throws Exception {
-		String sql = "select 1 from dual";
+		String sql = CoreDefinition.getPropertyValue("db.validation");
 		ORMParamsDTO dto = new ORMParamsDTO();
 		dto.setParam(null);
 		dto.setSqlid(sql);
