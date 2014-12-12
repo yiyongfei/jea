@@ -5,6 +5,7 @@ JEA定位为面向服务的分布式集成开发框架，要完全发挥JEA的�
 3、Hibernate和Mybatis的集成，DB的事务管理由Hibernate提供支持，所以一般增删改的操作由Hibernate来完成，而查询则交由Mybatis。<br>
 4、服务生产者，如果服务供企业内部系统使用，提供方式可以是Storm的实时模式或者ActiveMQ的队列模式，如果服务是提供给外部合作企业使用，提供方式可以是SOAP或者REST，通过CXF实现。<br>
 5、服务消费者，调用外部系统的服务完成业务，依据外部系统提供的接口方式，提供以下方式调用：MQ、DRPC、REST、SOAP，其中REST的调用通过HttpClient实现。<br>
+6、Web开发可以使用传统的SpringMVC模式，也可以通过提供REST接口，然后页面使用诸如Backbone之类的前端框架来完成。<br>
 
 子项目的说明：<br>
 1、web，用于Web层，封装了调用AppServer的序列化逻辑和调用逻辑<br>
