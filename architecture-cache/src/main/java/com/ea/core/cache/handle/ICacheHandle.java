@@ -4,9 +4,18 @@ import java.util.Map;
 import java.util.Set;
 
 public interface ICacheHandle {
-	public void set(Map<String, String> map, int seconds) throws Exception;
 	
-	public boolean set(String key, String value, int seconds) throws Exception;
+	public void set(String cacheLevel, Map<String, String> map, int seconds) throws Exception;
+	
+	public boolean set(String cacheLevel, String key, String value, int seconds) throws Exception;
+	
+	public void add(String cacheLevel, Map<String, String> map, int seconds) throws Exception;
+	
+	public boolean add(String cacheLevel, String key, String value, int seconds) throws Exception;
+	
+	public void replace(String cacheLevel, Map<String, String> map, int seconds) throws Exception;
+	
+	public boolean replace(String cacheLevel, String key, String value, int seconds) throws Exception;
 	
 	public Set<String> keys(String pattern, String regexp) throws Exception;
 	
@@ -20,9 +29,9 @@ public interface ICacheHandle {
 	
 	public String showRedisByRegexp(String pattern, String regexp) throws Exception;
 	
-	public void clean(String key) throws Exception;
+	public Boolean delete(String key) throws Exception;
 	
-	public int cleanByRegexp(String pattern, String regexp) throws Exception;
+	public int deleteByRegexp(String pattern, String regexp) throws Exception;
 	
 	public boolean isActivate();
 }

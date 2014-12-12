@@ -48,11 +48,56 @@ public class CacheClient {
 	public boolean set(String key, String value, int seconds) throws Exception{
 		ICacheCommands commands = pool.getResource();
 		try{
-			commands.set(key, value, seconds);
+			return commands.set(key, value, seconds);
 		} finally {
 			pool.returnResource(commands);
 		}
-		return true;
+	}
+	
+	public void add(Map<String, String> map, int seconds) throws Exception{
+		ICacheCommands commands = pool.getResource();
+		Iterator<String> it = map.keySet().iterator();
+		String key;
+		try{
+			while(it.hasNext()){
+				key = it.next();
+				commands.add(key, map.get(key), seconds);
+			}
+		} finally {
+			pool.returnResource(commands);
+		}
+	}
+	
+	public boolean add(String key, String value, int seconds) throws Exception{
+		ICacheCommands commands = pool.getResource();
+		try{
+			return commands.add(key, value, seconds);
+		} finally {
+			pool.returnResource(commands);
+		}
+	}
+	
+	public void replace(Map<String, String> map, int seconds) throws Exception{
+		ICacheCommands commands = pool.getResource();
+		Iterator<String> it = map.keySet().iterator();
+		String key;
+		try{
+			while(it.hasNext()){
+				key = it.next();
+				commands.replace(key, map.get(key), seconds);
+			}
+		} finally {
+			pool.returnResource(commands);
+		}
+	}
+	
+	public boolean replace(String key, String value, int seconds) throws Exception{
+		ICacheCommands commands = pool.getResource();
+		try{
+			return commands.replace(key, value, seconds);
+		} finally {
+			pool.returnResource(commands);
+		}
 	}
 	
 	public Set<String> keys(String pattern, String regexp) throws Exception{
@@ -122,28 +167,32 @@ public class CacheClient {
 		return sb.toString();
 	}
 	
-	public void clean(String key) throws Exception{
+	public Boolean delete(String key) throws Exception{
 		ICacheCommands commands = pool.getResource();
 		try{
-			commands.delete(key);
+			return commands.delete(key);
 		} finally {
 			pool.returnResource(commands);
 		}
 	}
 	
-	public int cleanByRegexp(String pattern, String regexp) throws Exception{
+	public int deleteByRegexp(String pattern, String regexp) throws Exception{
+		int count = 0;
 		Set<String> keySet = keys(pattern, regexp);
 		if(keySet != null && !keySet.isEmpty()){
 			ICacheCommands commands = pool.getResource();
 			Iterator<String> it = keySet.iterator();
 			try{
 				while(it.hasNext()){
-					commands.delete(it.next());
+					Boolean result = commands.delete(it.next());
+					if(result){
+						count++;
+					}
 				}
 			} finally {
 				pool.returnResource(commands);
 			}
 		}
-		return keySet.size();
+		return count;
 	}
 }

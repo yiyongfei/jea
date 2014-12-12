@@ -37,4 +37,45 @@ public class CacheConstants {
 		}
 
 	};
+	
+	public enum CACHE_LEVEL {
+		L1("l1.cache.", "1级缓存"),
+		L2("l2.cache.", "2级缓存");
+		
+		private String code;
+		private String desc;
+
+		private CACHE_LEVEL(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+		public String getDesc() {
+			return desc;
+		}
+
+	};
+	
+	public enum REDIS_RESULT {
+		SET_RESULT("OK", "set成功的返回结果");
+		
+		private String code;
+		private String desc;
+
+		private REDIS_RESULT(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+		public String getDesc() {
+			return desc;
+		}
+
+	};
 }

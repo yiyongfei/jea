@@ -17,7 +17,7 @@ public class Client {
 		CacheClient client = new CacheClient(cachePool);
 		
 		try {
-//			client.set("key", "value4345", 10);
+			client.set("key", "value4345", 10);
 			
 			System.out.println(client.get("key"));
 		} catch (Exception e) {

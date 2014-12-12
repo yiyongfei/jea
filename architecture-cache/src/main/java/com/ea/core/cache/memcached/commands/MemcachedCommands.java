@@ -19,11 +19,21 @@ public class MemcachedCommands implements ICacheCommands {
 		this.socketAddress = socketAddress;
 	}
 	@Override
-	public void set(String key, String value, int seconds) throws Exception {
+	public Boolean set(String key, String value, int seconds) throws Exception {
 		// TODO Auto-generated method stub
-		commands.set(key, seconds, value);
+		return commands.set(key, seconds, value);
 	}
 
+	@Override
+	public Boolean add(String key, String value, int seconds) throws Exception {
+		return commands.add(key, seconds, value);
+	}
+	
+	@Override
+	public Boolean replace(String key, String value, int seconds) throws Exception {
+		return commands.replace(key, seconds, value);
+	}
+	
 	@Override
 	public Boolean expire(String key, int seconds) throws Exception {
 		// TODO Auto-generated method stub
@@ -60,18 +70,6 @@ public class MemcachedCommands implements ICacheCommands {
 	public Boolean delete(String key) throws Exception {
 		// TODO Auto-generated method stub
 		return commands.delete(key);
-	}
-
-	@Override
-	public Long decrBy(String key, long integer) throws Exception {
-		// TODO Auto-generated method stub
-		return commands.decr(key, integer);
-	}
-
-	@Override
-	public Long incrBy(String key, long integer) throws Exception {
-		// TODO Auto-generated method stub
-		return commands.incr(key, integer);
 	}
 
 	@Override

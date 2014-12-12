@@ -35,9 +35,11 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	
 	private CacheClient client;
 	private ICacheHandle nextHandle;
+	private String level;
 	private boolean activate;
 	
 	public AbstractCacheHandle(String cacheLevel) {
+		this.level = cacheLevel;
 		this.activate = Boolean.valueOf(CacheDefinition.getPropertyValue(cacheLevel + "activate"));
 		if (activate) {
 			ICachePool cachePool = null;
@@ -70,27 +72,104 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		}		
 	}
 	
-	public void set(Map<String, String> map, int seconds) throws Exception{
-		if(this.isActivate()){
-			client.set(map, seconds);
+	public void set(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			//set缓存时，如果明确了数据欲缓存的级别，那只有该级别和该级别下的缓存服务器才会缓存
+			//例：数据要缓存在L2上，此时L1将不缓存，而L2和后续级别将缓存该数据
+			if(this.isActivate()){
+				client.set(map, seconds);
+			}
+			cacheLevel = null;
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			this.nextHandle.set(map, seconds);
+			this.nextHandle.set(cacheLevel, map, seconds);
 		}
 	}
 	
-	public boolean set(String key, String value, int seconds) throws Exception{
+	public boolean set(String cacheLevel, String key, String value, int seconds) throws Exception{
 		boolean result = true;
-		if(this.isActivate()){
-			result = client.set(key, value, seconds);
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			//set缓存时，如果明确了数据欲缓存的级别，那只有该级别和该级别下的缓存服务器才会缓存
+			//例：数据要缓存在L2上，此时L1将不缓存，而L2和后续级别将缓存该数据
+			if(this.isActivate()){
+				result = client.set(key, value, seconds);
+			}
+			cacheLevel = null;
 		}
+		
 		this.setNextHandle();
 		if(this.nextHandle != null){
 			if(this.isActivate()){
-				this.nextHandle.set(key, value, seconds);
+				this.nextHandle.set(cacheLevel, key, value, seconds);
 			} else {
-				result = this.nextHandle.set(key, value, seconds);
+				result = this.nextHandle.set(cacheLevel, key, value, seconds);
+			}
+		}
+		return result;
+	}
+	
+	public void add(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			if(this.isActivate()){
+				client.add(map, seconds);
+			}
+			cacheLevel = null;
+		}
+		this.setNextHandle();
+		if(this.nextHandle != null){
+			this.nextHandle.add(cacheLevel, map, seconds);
+		}
+	}
+	
+	public boolean add(String cacheLevel, String key, String value, int seconds) throws Exception{
+		boolean result = true;
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			if(this.isActivate()){
+				result = client.add(key, value, seconds);
+			}
+			cacheLevel = null;
+		}
+		
+		this.setNextHandle();
+		if(this.nextHandle != null){
+			if(this.isActivate()){
+				this.nextHandle.add(cacheLevel, key, value, seconds);
+			} else {
+				result = this.nextHandle.add(cacheLevel, key, value, seconds);
+			}
+		}
+		return result;
+	}
+	
+	public void replace(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			if(this.isActivate()){
+				client.replace(map, seconds);
+			}
+			cacheLevel = null;
+		}
+		this.setNextHandle();
+		if(this.nextHandle != null){
+			this.nextHandle.replace(cacheLevel, map, seconds);
+		}
+	}
+	
+	public boolean replace(String cacheLevel, String key, String value, int seconds) throws Exception{
+		boolean result = true;
+		if(cacheLevel == null || this.level.equals(cacheLevel)){
+			if(this.isActivate()){
+				result = client.replace(key, value, seconds);
+			}
+			cacheLevel = null;
+		}
+		
+		this.setNextHandle();
+		if(this.nextHandle != null){
+			if(this.isActivate()){
+				this.nextHandle.replace(cacheLevel, key, value, seconds);
+			} else {
+				result = this.nextHandle.replace(cacheLevel, key, value, seconds);
 			}
 		}
 		return result;
@@ -186,26 +265,36 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		return sb.toString();
 	}
 	
-	public void clean(String key) throws Exception{
+	public Boolean delete(String key) throws Exception{
+		boolean result = true;
 		if(this.isActivate()){
-			client.clean(key);
+			result = client.delete(key);
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			this.nextHandle.clean(key);
+			if(this.isActivate()){
+				this.nextHandle.delete(key);
+			} else {
+				result = this.nextHandle.delete(key);
+			}
 		}
+		return result;
 	}
 	
-	public int cleanByRegexp(String pattern, String regexp) throws Exception{
-		Set<String> keySet = keys(pattern, regexp);
+	public int deleteByRegexp(String pattern, String regexp) throws Exception{
+		int count = 0;
 		if(this.isActivate()){
-			client.cleanByRegexp(pattern, regexp);
+			count = client.deleteByRegexp(pattern, regexp);
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			this.nextHandle.cleanByRegexp(pattern, regexp);
+			if(this.isActivate()){
+				this.nextHandle.deleteByRegexp(pattern, regexp);
+			} else {
+				count = this.nextHandle.deleteByRegexp(pattern, regexp);
+			}
 		}
-		return keySet.size();
+		return count;
 	}
 	
 	@Override

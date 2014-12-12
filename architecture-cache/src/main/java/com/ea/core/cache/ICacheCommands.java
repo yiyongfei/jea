@@ -4,7 +4,11 @@ import java.util.Set;
 
 public interface ICacheCommands {
 
-	public void set(String key, String value, int seconds) throws Exception;
+	public Boolean add(String key, String value, int seconds) throws Exception;
+	
+	public Boolean set(String key, String value, int seconds) throws Exception;
+	
+	public Boolean replace(String key, String value, int seconds) throws Exception;
 	
 	public Boolean expire(String key, int seconds) throws Exception;
 	
@@ -15,10 +19,6 @@ public interface ICacheCommands {
 	public Boolean exists(String key) throws Exception;
 	
 	public Boolean delete(String key) throws Exception;
-	
-	public Long decrBy(String key, long integer) throws Exception;
-
-	public Long incrBy(String key, long integer) throws Exception;
 
 	public Boolean append(String key, String value) throws Exception;
     

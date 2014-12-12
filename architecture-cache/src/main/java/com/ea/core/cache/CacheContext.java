@@ -39,16 +39,60 @@ public class CacheContext {
 	}
 
 	public void set(Map<String, Object> map, int seconds) throws Exception{
+		set(null, map, seconds);
+	}
+	public void set(String cacheLevel, Map<String, Object> map, int seconds) throws Exception{
 		Map<String, String> result = new HashMap<String, String>();
 		Set<String> keys = map.keySet();
 		for(String key : keys){
 			result.put(key, this.serialize(map.get(key)));
 		}
-		l1CacheHandle.set(result, seconds);
+		l1CacheHandle.set(cacheLevel, result, seconds);
 	}
 	
 	public boolean set(String key, Object value, int seconds) throws Exception{
-		return l1CacheHandle.set(key, this.serialize(value), seconds);
+		return set(null, key, value, seconds);
+	}
+	public boolean set(String cacheLevel, String key, Object value, int seconds) throws Exception{
+		return l1CacheHandle.set(cacheLevel, key, this.serialize(value), seconds);
+	}
+	
+	public void add(Map<String, Object> map, int seconds) throws Exception{
+		add(null, map, seconds);
+	}
+	public void add(String cacheLevel, Map<String, Object> map, int seconds) throws Exception{
+		Map<String, String> result = new HashMap<String, String>();
+		Set<String> keys = map.keySet();
+		for(String key : keys){
+			result.put(key, this.serialize(map.get(key)));
+		}
+		l1CacheHandle.add(cacheLevel, result, seconds);
+	}
+	
+	public boolean add(String key, Object value, int seconds) throws Exception{
+		return add(null, key, value, seconds);
+	}
+	public boolean add(String cacheLevel, String key, Object value, int seconds) throws Exception{
+		return l1CacheHandle.add(cacheLevel, key, this.serialize(value), seconds);
+	}
+	
+	public void replace(Map<String, Object> map, int seconds) throws Exception{
+		replace(null, map, seconds);
+	}
+	public void replace(String cacheLevel, Map<String, Object> map, int seconds) throws Exception{
+		Map<String, String> result = new HashMap<String, String>();
+		Set<String> keys = map.keySet();
+		for(String key : keys){
+			result.put(key, this.serialize(map.get(key)));
+		}
+		l1CacheHandle.replace(cacheLevel, result, seconds);
+	}
+	
+	public boolean replace(String key, Object value, int seconds) throws Exception{
+		return replace(null, key, value, seconds);
+	}
+	public boolean replace(String cacheLevel, String key, Object value, int seconds) throws Exception{
+		return l1CacheHandle.replace(cacheLevel, key, this.serialize(value), seconds);
 	}
 	
 	public Set<String> keys(String pattern, String regexp) throws Exception{
@@ -81,12 +125,12 @@ public class CacheContext {
 		return l1CacheHandle.showRedisByRegexp(pattern, regexp);
 	}
 	
-	public void clean(String key) throws Exception{
-		l1CacheHandle.clean(key);
+	public void delete(String key) throws Exception{
+		l1CacheHandle.delete(key);
 	}
 	
-	public int cleanByRegexp(String pattern, String regexp) throws Exception{
-		return l1CacheHandle.cleanByRegexp(pattern, regexp);
+	public int deleteByRegexp(String pattern, String regexp) throws Exception{
+		return l1CacheHandle.deleteByRegexp(pattern, regexp);
 	}
 	
 	protected String serialize(Object model) throws Exception{
@@ -102,6 +146,10 @@ public class CacheContext {
 	}
 	
 	protected Object deserialize(String value) throws Exception{
+		if(value == null || value.trim().length() == 0){
+			return null;
+		}
+		
 		ISerializer requestSerializer = new DefaultSerializer();
 		requestSerializer.register(Request.class);
 		Request request = (Request) requestSerializer.deserialize(value);

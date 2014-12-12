@@ -8,6 +8,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCommands;
 import redis.clients.jedis.ShardedJedis;
 
+import com.ea.core.cache.CacheConstants;
 import com.ea.core.cache.ICacheCommands;
 
 public class RedisCommands implements ICacheCommands {
@@ -17,19 +18,44 @@ public class RedisCommands implements ICacheCommands {
 		this.commands = commands;
 	}
 	@Override
-	public void set(String key, String value, int seconds) {
+	public Boolean set(String key, String value, int seconds) {
 		// TODO Auto-generated method stub
-		commands.set(key, value);
+		String result = null;
 		if(seconds > 0){
-			expire(key, seconds);
+			result = commands.setex(key, seconds, value);
+		} else {
+			result = commands.set(key, value);
 		}
+		return CacheConstants.REDIS_RESULT.SET_RESULT.getCode().equals(result) ? true : false;
+	}
+	
+	@Override
+	public Boolean add(String key, String value, int seconds) throws Exception {
+		String result = null;
+		if(seconds > 0){
+			result = commands.set(key, value, "NX", "EX", seconds);
+		} else {
+			result = commands.set(key, value, "NX", "EX", -1);
+		}
+		return CacheConstants.REDIS_RESULT.SET_RESULT.getCode().equals(result) ? true : false;
 	}
 
+	@Override
+	public Boolean replace(String key, String value, int seconds) throws Exception {
+		String result = null;
+		if(seconds > 0){
+			result = commands.set(key, value, "XX", "EX", seconds);
+		} else {
+			result = commands.set(key, value, "XX", "EX", -1);
+		}
+		return CacheConstants.REDIS_RESULT.SET_RESULT.getCode().equals(result) ? true : false;
+	}
+	
 	@Override
 	public Boolean expire(String key, int seconds) {
 		// TODO Auto-generated method stub
 		Long num = commands.expire(key, seconds);
-		return num > 0 ? true : false;
+		return num == 1 ? true : false;
 	}
 
 	@Override
@@ -67,18 +93,6 @@ public class RedisCommands implements ICacheCommands {
 		// TODO Auto-generated method stub
 		Long num = commands.del(key);
 		return num > 0 ? true : false;
-	}
-
-	@Override
-	public Long decrBy(String key, long integer) {
-		// TODO Auto-generated method stub
-		return commands.decrBy(key, integer);
-	}
-
-	@Override
-	public Long incrBy(String key, long integer) {
-		// TODO Auto-generated method stub
-		return commands.incrBy(key, integer);
 	}
 
 	@Override
