@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.architecture.core.cache.redis.pool.factory;
+package com.ea.core.cache.redis.pool.factory;
 
-import com.architecture.core.cache.redis.pool.RedisPool;
-import com.architecture.core.cache.redis.pool.impl.RedisGeneralPool;
-import com.architecture.core.cache.redis.pool.impl.RedisShardedPool;
+import com.ea.core.cache.ICachePool;
+import com.ea.core.cache.redis.pool.impl.RedisGeneralPool;
+import com.ea.core.cache.redis.pool.impl.RedisShardedPool;
 
 public class RedisPoolFactory {
 	public final static String SHARDED = "SHARDED";
 	public final static String GENERAL = "GENERAL";
 	
-	public static RedisPool getInstance(String factoryTag){
+	public static ICachePool getInstance(String factoryTag){
 		if(SHARDED.equals(factoryTag)){
 			return new RedisShardedPool();
 		}else if(GENERAL.equals(factoryTag)){

@@ -15,10 +15,10 @@
  */
 package com.ea.core.base.dto;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import jodd.typeconverter.TypeConverterManager;
 
@@ -42,12 +42,12 @@ public class DynamicDTO extends BaseModel {
 	
 	public DynamicDTO(){
 		generator = new BeanGenerator();
-		valueMap = new HashMap<String, Object>();
+		valueMap = new TreeMap<String, Object>();
 	}
 	
 	public DynamicDTO(Map<String, Object> map){
 		generator = new BeanGenerator();
-		valueMap = new HashMap<String, Object>();
+		valueMap = new TreeMap<String, Object>();
 		Iterator<String> keys = map.keySet().iterator();
 		String key = null;
 		while(keys.hasNext()){
@@ -63,7 +63,7 @@ public class DynamicDTO extends BaseModel {
 	
 	public DynamicDTO(BaseModel model){
 		generator = new BeanGenerator();
-		valueMap = new HashMap<String, Object>();
+		valueMap = new TreeMap<String, Object>();
 		beanObject = model;
 		beanMap = BeanMap.create(model);
 		valueMap.putAll(beanMap);
@@ -75,7 +75,7 @@ public class DynamicDTO extends BaseModel {
 	 */
 	public DynamicDTO(Object obj){
 		generator = new BeanGenerator();
-		valueMap = new HashMap<String, Object>();
+		valueMap = new TreeMap<String, Object>();
 		beanObject = obj;
 		beanMap = BeanMap.create(obj);
 		valueMap.putAll(beanMap);

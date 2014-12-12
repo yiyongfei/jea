@@ -13,25 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.architecture.core.cache.redis.pool;
+package com.ea.core.cache.handle.impl;
 
-import redis.clients.jedis.JedisCommands;
+import org.springframework.stereotype.Component;
 
-public interface RedisPool {
-	public void setMaxTotal(int maxTotal);
-	
-	public void setMaxIdle(int maxIdle);
-	
-	public void setMaxWaitMillis(long maxWaitMillis);
-	
-	public void setTestOnBorrow(boolean testOnBorrow);
-	
-	public void setTestOnReturn(boolean testOnReturn);
-	
-	public void addRedisServer(String host, int port);
-	
-	public JedisCommands getResource();
-	
-	public void returnResource(JedisCommands jedis);
+import com.ea.core.cache.handle.AbstractCacheHandle;
+import com.ea.core.cache.handle.ICacheHandle;
 
+@Component
+public class L1CacheHandle extends AbstractCacheHandle {
+	private final static String CACHE_LEVEL = "l1.cache.";
+	
+	public L1CacheHandle() {
+		super(CACHE_LEVEL);
+	}
+
+	
+
+	@Override
+	public void setNextHandle() {
+		// TODO Auto-generated method stub
+		ICacheHandle nextHandle = (ICacheHandle)this.context.getBean("l2CacheHandle");
+		this.setNextHandle(nextHandle);
+	}
+	
 }

@@ -55,7 +55,7 @@
 	    
 	    <dependency>
 	        <groupId>com.ea</groupId>
-	        <artifactId>architecture-core</artifactId>
+	        <artifactId>architecture-cache</artifactId>
 	        <version>0.0.1</version>
 	    </dependency>
     </dependencies>
