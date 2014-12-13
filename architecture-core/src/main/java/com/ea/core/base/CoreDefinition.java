@@ -29,7 +29,7 @@ public class CoreDefinition {
 	static Map<String, String> mapProperty = new HashMap<String, String>();
 	
 	static{
-		ClassPathResource resource = new ClassPathResource("ea-core.properties");
+		ClassPathResource resource = new ClassPathResource("jea-core.properties");
 		try {
 			 Props p = new Props();
 			 p.load(resource.getInputStream());
