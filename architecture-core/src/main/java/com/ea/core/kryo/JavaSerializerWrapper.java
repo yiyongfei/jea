@@ -19,6 +19,12 @@ import java.io.Serializable;
 
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 
+/**
+ * 使JavaSerializer能够被序列化
+ * 
+ * @author yiyongfei
+ *
+ */
 public class JavaSerializerWrapper extends JavaSerializer implements Serializable {
 
 	/**

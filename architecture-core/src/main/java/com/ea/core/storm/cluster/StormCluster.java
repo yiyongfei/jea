@@ -20,6 +20,12 @@ import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.StormTopology;
 
+/**
+ * Storm集群的封装，本地集群或远程集群
+ * 
+ * @author yiyongfei
+ *
+ */
 public class StormCluster {
 
 	private Object cluster;

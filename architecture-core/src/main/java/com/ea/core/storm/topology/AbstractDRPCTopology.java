@@ -31,6 +31,12 @@ import backtype.storm.topology.OutputFieldsGetter;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 
+/**
+ * DRPC Topology的定义
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractDRPCTopology extends AbstractTopology {
 	/**
 	 * 
@@ -55,6 +61,7 @@ public abstract class AbstractDRPCTopology extends AbstractTopology {
 	@Override
 	public TopologyBuilder createBuilder(){
 		TopologyBuilder builder = super.initBuilder();
+		//设置预处理步骤
 		builder.setBolt(this.prepareId, new PrepareRequest()).noneGrouping(spoutId);
 		AbstractDrpcBolt lastBolt = setBolt(builder, this.prepareId);
 		
@@ -70,9 +77,11 @@ public abstract class AbstractDRPCTopology extends AbstractTopology {
             throw new RuntimeException("Output stream of last component in LinearDRPCTopology must contain exactly two fields. The first should be the request id, and the second should be the result.");
         }
 		
+        //合并步骤
 		builder.setBolt(this.joinId, new JoinResult(this.prepareId))
         .fieldsGrouping(lastBolt.getBoltName(), outputStream, new Fields(fields.get(0)))
         .fieldsGrouping(this.prepareId, PrepareRequest.RETURN_STREAM, new Fields("request"));
+		//return步骤
 		builder.setBolt(returnId, new ReturnResults()).noneGrouping(this.joinId);
 		return builder;
 	}
@@ -80,8 +89,10 @@ public abstract class AbstractDRPCTopology extends AbstractTopology {
 	protected IRichSpout initSpout() {
 		// TODO Auto-generated method stub
 		if(this.localDRPC != null) {
+			//本地部署
 			return new DRPCSpout(this.getTopologyName(), this.localDRPC);
 		} else {
+			//远程部署
 			return new DRPCSpout(this.getTopologyName());
 		}
 	}

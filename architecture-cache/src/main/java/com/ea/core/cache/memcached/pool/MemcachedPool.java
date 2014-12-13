@@ -95,6 +95,9 @@ public class MemcachedPool implements ICachePool {
 		commands.shutdown();
 	}
 	
+	/**
+	 * 分布策略为一致性哈希
+	 */
 	private void initPool(){
 		StringBuffer memcachedAddr = new StringBuffer();
 		for(String addr : addresses){

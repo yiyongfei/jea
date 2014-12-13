@@ -27,8 +27,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.ea.core.base.CoreDefinition;
 import com.ea.core.bridge.IConnector;
-import com.ea.core.storm.StormDefinition;
 import com.ea.core.storm.TopologyDefinition;
 import com.ea.core.storm.topology.ITopology;
 
@@ -69,11 +69,11 @@ public class BridgeContext implements ApplicationContextAware{
 	 * @throws BeansException
 	 */
 	private void initConnection() {
-		if(new Boolean(StormDefinition.getPropertyValue("call.mode.local"))){
+		if(BridgeConstant.CONNECTOR_MODE.STORM_LOCAL.getCode().equals(CoreDefinition.getPropertyValue("sync.mode"))){
 			ActivateStorm astorm = new ActivateStorm(connectorMapping.get(BridgeConstant.CONNECTOR_MODE.STORM_LOCAL.getCode()));
 			new Thread(astorm).start();
 		}
-		if(new Boolean(StormDefinition.getPropertyValue("call.mode.remote"))){
+		if(BridgeConstant.CONNECTOR_MODE.STORM_REMOTE.getCode().equals(CoreDefinition.getPropertyValue("sync.mode"))){
 			ActivateStorm astorm = new ActivateStorm(connectorMapping.get(BridgeConstant.CONNECTOR_MODE.STORM_REMOTE.getCode()));
 			new Thread(astorm).start();
 		}

@@ -23,7 +23,9 @@ public class ReceiveDTO extends BaseDTO {
 	 * 
 	 */
 	private static final long serialVersionUID = -7854894879593486553L;
+	/*FacadeId*/
 	private String requestId;
+	/*欲处理的参数*/
 	private Object[] params;
 	
 	public String getRequestId() {

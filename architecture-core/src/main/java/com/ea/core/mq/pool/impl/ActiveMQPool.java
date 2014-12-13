@@ -22,6 +22,13 @@ import org.apache.activemq.pool.PooledConnectionFactory;
 
 import com.ea.core.mq.pool.MQPool;
 
+/**
+ * MQ池
+ * PS：池参数优化，配置方式，放在mq.properties
+ * 
+ * @author yiyongfei
+ *
+ */
 public class ActiveMQPool implements MQPool {
 	private PooledConnectionFactory connectionPool;
 	private String username;

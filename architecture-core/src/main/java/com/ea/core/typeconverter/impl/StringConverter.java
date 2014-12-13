@@ -19,6 +19,12 @@ import java.util.Date;
 
 import jodd.datetime.JDateTime;
 
+/**
+ * 日期格式
+ * 
+ * @author yiyongfei
+ *
+ */
 public class StringConverter extends jodd.typeconverter.impl.StringConverter {
 	private String dateFormat = "YYYY-MM-DD hh:mm:ss";
 

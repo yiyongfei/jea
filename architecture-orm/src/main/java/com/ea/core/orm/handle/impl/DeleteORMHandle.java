@@ -23,7 +23,12 @@ import com.ea.core.orm.handle.AbstractORMHandle;
 import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.ORMHandle;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
-
+/**
+ * 删除操作，由Hibnerate完成
+ * 
+ * @author yiyongfei
+ *
+ */
 @Component
 public class DeleteORMHandle extends AbstractORMHandle {
     
@@ -40,7 +45,7 @@ public class DeleteORMHandle extends AbstractORMHandle {
 			session.delete(po);
 	        return null;
 		} else {
-			throw new Exception("请确认是否继承BasePO!");
+			throw new Exception("参数请确认是否继承BasePO!");
 		}
 	}
 

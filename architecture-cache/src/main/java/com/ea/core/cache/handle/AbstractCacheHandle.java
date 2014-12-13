@@ -72,6 +72,11 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		}		
 	}
 	
+	/**
+	 * 当Key存在时，会替换，当Key不存在时，会新增
+	 * 当指定级别缓存器和当前缓存器级别一致时，当前缓存器设置缓存数据
+	 * 当前缓存器设置完后，如果当前缓存器下还存在下个级别的缓存器，将数据交由下个级别的缓存器缓存
+	 */
 	public void set(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			//set缓存时，如果明确了数据欲缓存的级别，那只有该级别和该级别下的缓存服务器才会缓存
@@ -88,7 +93,7 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	}
 	
 	public boolean set(String cacheLevel, String key, String value, int seconds) throws Exception{
-		boolean result = true;
+		boolean result = false;
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			//set缓存时，如果明确了数据欲缓存的级别，那只有该级别和该级别下的缓存服务器才会缓存
 			//例：数据要缓存在L2上，此时L1将不缓存，而L2和后续级别将缓存该数据
@@ -109,6 +114,11 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		return result;
 	}
 	
+	/**
+	 * 当Key存在时，失败，当Key不存在时，会新增
+	 * 当指定级别缓存器和当前缓存器级别一致时，当前缓存器设置缓存数据
+	 * 当前缓存器设置完后，如果当前缓存器下还存在下个级别的缓存器，将数据交由下个级别的缓存器缓存
+	 */
 	public void add(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			if(this.isActivate()){
@@ -123,7 +133,7 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	}
 	
 	public boolean add(String cacheLevel, String key, String value, int seconds) throws Exception{
-		boolean result = true;
+		boolean result = false;
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			if(this.isActivate()){
 				result = client.add(key, value, seconds);
@@ -142,6 +152,11 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		return result;
 	}
 	
+	/**
+	 * 当Key存在时，会替换，当Key不存在时，会失败
+	 * 当指定级别缓存器和当前缓存器级别一致时，当前缓存器设置缓存数据
+	 * 当前缓存器设置完后，如果当前缓存器下还存在下个级别的缓存器，将数据交由下个级别的缓存器缓存
+	 */
 	public void replace(String cacheLevel, Map<String, String> map, int seconds) throws Exception{
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			if(this.isActivate()){
@@ -156,7 +171,7 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	}
 	
 	public boolean replace(String cacheLevel, String key, String value, int seconds) throws Exception{
-		boolean result = true;
+		boolean result = false;
 		if(cacheLevel == null || this.level.equals(cacheLevel)){
 			if(this.isActivate()){
 				result = client.replace(key, value, seconds);
@@ -175,6 +190,9 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		return result;
 	}
 	
+	/**
+	 * 当前缓存器设置了Key，返回当前缓存器的Key内容，如果当前缓存器未设置Key，交给下一缓存器去获取
+	 */
 	public Set<String> keys(String pattern, String regexp) throws Exception{
 		if(this.isActivate()){
 			Set<String> set = client.keys(pattern, regexp);
@@ -191,14 +209,20 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		}
 	}
 	
+	/**
+	 * 设置失效时间
+	 * 所有缓存级别只要存在该Key，都会设置失败时间
+	 * 考虑到Key的分布可能不会在所有缓存器里都存在，所以只要有一个缓存器设置成功，则返回成功
+	 * 
+	 */
 	public Boolean expire(String key, int seconds) throws Exception {
-		boolean result = true;
+		boolean result = false;
 		if(this.isActivate()){
 			result = client.expire(key, seconds);
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			if(this.isActivate()){
+			if(this.isActivate() && result){
 				this.nextHandle.expire(key, seconds);
 			} else {
 				result = this.nextHandle.expire(key, seconds);
@@ -207,6 +231,9 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		return result;
 	}
 	
+	/**
+	 * 当前缓存器如果激活，则根据Key获取Value，获到后直接返回，如果获不到，交由下一缓存器获取
+	 */
 	public String get(String key) throws Exception{
 		if(this.isActivate()){
 			String value = client.get(key);
@@ -222,10 +249,13 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		}
 	}
 	
+	/**
+	 * 当前缓存器如果存在Key，返回True，否则交给下一缓存器判断
+	 */
 	public Boolean exists(String key) throws Exception {
 		if(this.isActivate()){
 			Boolean value = client.exists(key);
-			if(value != null) {
+			if(value != null && value) {
 				return value;
 			}
 		}
@@ -240,7 +270,7 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	public Map<String, String> getByRegexp(String pattern, String regexp) throws Exception{
 		if(this.isActivate()){
 			Map<String, String> map = client.getByRegexp(pattern, regexp);
-			if(map == null) {
+			if(map != null && !map.isEmpty()) {
 				return map;
 			} 
 		}
@@ -250,7 +280,6 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		} else {
 			return null;
 		}
-	
 	}
 	
 	public String showRedisByRegexp(String pattern, String regexp) throws Exception{
@@ -266,13 +295,13 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 	}
 	
 	public Boolean delete(String key) throws Exception{
-		boolean result = true;
+		boolean result = false;
 		if(this.isActivate()){
 			result = client.delete(key);
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			if(this.isActivate()){
+			if(this.isActivate() && result){
 				this.nextHandle.delete(key);
 			} else {
 				result = this.nextHandle.delete(key);
@@ -288,7 +317,7 @@ public abstract class AbstractCacheHandle implements ICacheHandle, ApplicationCo
 		}
 		this.setNextHandle();
 		if(this.nextHandle != null){
-			if(this.isActivate()){
+			if(this.isActivate() && count > 0){
 				this.nextHandle.deleteByRegexp(pattern, regexp);
 			} else {
 				count = this.nextHandle.deleteByRegexp(pattern, regexp);

@@ -26,6 +26,11 @@ import com.ea.core.orm.handle.AbstractORMHandle;
 import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
+/**
+ * SQL执行，通过Mybatis完成，用于数据查询（目前不放开使用）
+ * @author yiyongfei
+ *
+ */
 @Component
 public class MybatisSqlORMHandle extends AbstractORMHandle {
     

@@ -23,6 +23,9 @@ public class Response extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7756010759471037195L;
+	/* 结果：如果调用业务逻辑过程中出现异常，结果为失败，否则成功
+	 * ResponseConstants.RESPONSE_RESULT
+	 * */
 	private String responseId;
 	private String serializer;
 	private String content;

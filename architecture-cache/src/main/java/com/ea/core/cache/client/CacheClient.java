@@ -24,6 +24,12 @@ import com.ea.core.base.utils.RegexUtil;
 import com.ea.core.cache.ICacheCommands;
 import com.ea.core.cache.ICachePool;
 
+/**
+ * 缓存客户端
+ * 
+ * @author yiyongfei
+ *
+ */
 public class CacheClient {
 	private ICachePool pool;
 	

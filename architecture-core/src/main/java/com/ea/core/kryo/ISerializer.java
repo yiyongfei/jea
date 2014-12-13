@@ -20,14 +20,42 @@ import java.io.Serializable;
 import com.esotericsoftware.kryo.Serializer;
 
 public interface ISerializer extends Serializable{
+	
+	/**
+	 * 序列化成字符串，字符串以ISO-8859-1编码
+	 * 目前框架里所有序列化的内容都以字符串方式存在
+	 * 
+	 * @param obj
+	 * @return
+	 * @throws Exception
+	 */
 	public String serialize(Object obj) throws Exception;
 	
+	/**
+	 * 序列化成byte数组
+	 * 
+	 * @param obj
+	 * @return
+	 * @throws Exception
+	 */
 	public byte[] Serialize(Object obj) throws Exception;
 	
+	/**
+	 * 根据字符串内容反序列化成对象
+	 * 
+	 * @param serialString
+	 * @return
+	 * @throws Exception
+	 */
 	public Object deserialize(String serialString) throws Exception;
 	
 	public Object Deserialize(byte[] aryByte) throws Exception;
 	
+	/**
+	 * 注册Class
+	 * 
+	 * @param type
+	 */
 	public void register(Class<?> type);
 	
 	public void register(Class<?> type, Serializer<?> serializer);

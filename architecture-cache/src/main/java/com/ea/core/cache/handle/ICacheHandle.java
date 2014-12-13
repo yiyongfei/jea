@@ -3,6 +3,12 @@ package com.ea.core.cache.handle;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Level缓存接口
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface ICacheHandle {
 	
 	public void set(String cacheLevel, Map<String, String> map, int seconds) throws Exception;

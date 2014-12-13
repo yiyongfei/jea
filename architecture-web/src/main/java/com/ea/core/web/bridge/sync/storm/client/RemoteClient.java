@@ -17,14 +17,16 @@ package com.ea.core.web.bridge.sync.storm.client;
 
 import org.springframework.stereotype.Component;
 
+import com.ea.core.base.CoreDefinition;
 import com.ea.core.storm.StormDefinition;
+import com.ea.core.web.bridge.BridgeConstant;
 
 @Component
 public class RemoteClient extends com.ea.core.bridge.sync.storm.client.RemoteClient {
 	
 	public RemoteClient(){
 		super();
-		if(new Boolean(StormDefinition.getPropertyValue("call.mode.remote"))){
+		if(BridgeConstant.CONNECTOR_MODE.STORM_REMOTE.getCode().equals(CoreDefinition.getPropertyValue("sync.mode"))){
 			super.init(StormDefinition.getPropertyValue("drpc.server.host"), new Integer(StormDefinition.getPropertyValue("drpc.server.port")), new Integer(StormDefinition.getPropertyValue("drpc.server.timeout")));
 		}
 	}

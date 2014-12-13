@@ -24,6 +24,12 @@ import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.ORMHandle;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
+/**
+ * 更新操作，由Hibnerate完成
+ * 
+ * @author yiyongfei
+ *
+ */
 @Component
 public class UpdateORMHandle extends AbstractORMHandle {
     
@@ -39,7 +45,7 @@ public class UpdateORMHandle extends AbstractORMHandle {
 			session.update(po);
 	        return null;
 		} else {
-			throw new Exception("����ʱ�����ṩ�̳���BasePO��ʵ��!");
+			throw new Exception("参数请确认是否继承BasePO!");
 		}
 
 	}

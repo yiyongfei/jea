@@ -28,6 +28,12 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+/**
+ * Kryo序列化工具
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractSerializer implements ISerializer {
 	/**
 	 * 
@@ -49,6 +55,10 @@ public abstract class AbstractSerializer implements ISerializer {
 			outStream.close();
 		}
 	}
+	
+	/**
+	 * 序列化成字符串，字符串以ISO-8859-1方式编码
+	 */
 	@Override
 	public String serialize(Object obj) throws Exception {
 		ByteArrayOutputStream outStream = _Serialize(obj);
@@ -89,10 +99,16 @@ public abstract class AbstractSerializer implements ISerializer {
         	kryo = null;
         }
 	}
+	/**
+	 * 将字符串反序列化成对象
+	 */
 	public Object deserialize(String serialString) throws Exception{
 		return Deserialize(serialString.getBytes("ISO-8859-1"));
 	}
 	
+	/**
+	 * 往Kryo注册Class
+	 */
 	public void register(Class<?> type){
 		propertyMap.put(type, null);
 	}
@@ -101,10 +117,20 @@ public abstract class AbstractSerializer implements ISerializer {
 		propertyMap.put(type, serializer);
 	}
 	
+	/**
+	 * 遍历Object对象的所有内容，注册这些内容对应的Class
+	 * 
+	 * @param obj
+	 */
 	protected void initBySerialize(Object obj) {
 		register(obj);
 	}
 	
+	/**
+	 * 根据所注册的Class，初始化Kryo实例
+	 * 
+	 * @return
+	 */
 	protected Kryo initKryo() {
 		Kryo kryo = new Kryo();
 		kryo.setReferences(true); 

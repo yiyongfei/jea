@@ -33,6 +33,16 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
+/**
+ * DRPC封装Bolt类
+ * 1、反序列化远程提交的请求数据
+ * 2、调用指定的Facade
+ * 3、如果执行成功，将执行结果序列化，并返回
+ * 4、如果执行失败，将异常序列化，并返回
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractDrpcBolt extends BaseBasicBolt {
 
 	/**

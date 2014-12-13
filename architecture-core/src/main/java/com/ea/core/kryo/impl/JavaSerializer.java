@@ -28,6 +28,12 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+/**
+ * 序列化实现Serializable接口的对象
+ * 
+ * @author yiyongfei
+ *
+ */
 public class JavaSerializer implements ISerializer {
 	
 	/**

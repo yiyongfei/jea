@@ -17,6 +17,12 @@ package com.ea.core.mq.consumer;
 
 import java.io.Serializable;
 
+/**
+ * 消息消费者接口
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface IConsumer extends Runnable, Serializable {
 	
 	public void setQueueName(String queueName);

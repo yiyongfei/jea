@@ -17,11 +17,18 @@ package com.ea.core.cache.handle.impl;
 
 import org.springframework.stereotype.Component;
 
+import com.ea.core.cache.CacheConstants;
 import com.ea.core.cache.handle.AbstractCacheHandle;
 
+/**
+ * L2缓存器
+ * 
+ * @author yiyongfei
+ *
+ */
 @Component
 public class L2CacheHandle extends AbstractCacheHandle {
-	private final static String CACHE_LEVEL = "l2.cache.";
+	private final static String CACHE_LEVEL = CacheConstants.CACHE_LEVEL.L2.getCode();
 
 	public L2CacheHandle() {
 		super(CACHE_LEVEL);	

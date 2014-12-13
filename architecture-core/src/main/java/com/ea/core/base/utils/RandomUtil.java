@@ -17,6 +17,12 @@ package com.ea.core.base.utils;
 
 import java.util.Random;
 
+/**
+ * 随机字符串生成工具
+ * 
+ * @author yiyongfei
+ *
+ */
 public class RandomUtil {
 	public static String getRandomString(int length) {
 		String base = "abcdefghijklmnopqrstuvwxyz0123456789".toUpperCase();

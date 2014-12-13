@@ -23,8 +23,11 @@ public class Request extends BaseModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 8719792649972660402L;
+	/*放置FacadeId（BeanId）*/
 	private String requestId;
+	/*序列化器被序列化后的内容*/
 	private String serializer;
+	/*对象被序列化后的内容*/
 	private String content;
 
 	public String getRequestId() {

@@ -22,6 +22,12 @@ import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.ORMHandle;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
+/**
+ * 只用于触发DB操作，不做实际动作
+ * 
+ * @author yiyongfei
+ *
+ */
 @Component
 public class TriggerORMHandle extends AbstractORMHandle {
     

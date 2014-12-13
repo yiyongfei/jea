@@ -38,6 +38,9 @@ public abstract class AbstractORMHandle implements ORMHandle, ApplicationContext
 		this.level = level;
 	}
 	
+	/**
+	 * 符合当前Level，则执行DB操作，否则交由下个Handle去执行
+	 */
 	public final Object handle(String level, ORMParamsDTO dto) throws Exception {
 		if(this.level.equals(level)){
 			return this.execute(dto);
@@ -46,13 +49,13 @@ public abstract class AbstractORMHandle implements ORMHandle, ApplicationContext
 			if(this.nextHandle != null){
 				return this.nextHandle.handle(level, dto);
 			} else {
-				throw new Exception("û����Ӧ��ORM����Handle�����ʵ��");
+				throw new Exception("必须设置ORMHandle处理当前请求");
 			}
 		}
 	}
 	
 	/**
-	 * �÷����������ṩ�������DB�Ľ���
+	 * 执行DB操作
 	 * @param dto
 	 * @return
 	 * @throws Exception
@@ -60,7 +63,7 @@ public abstract class AbstractORMHandle implements ORMHandle, ApplicationContext
 	protected abstract Object execute(ORMParamsDTO dto) throws Exception;
 	
 	/**
-	 * �÷����������ṩ���������Լ������¸�ְ��������˭
+	 * 设置下个Handle，子类设置，如果是最后一个Handle，不设置
 	 */
 	public abstract void setNextHandle();
 

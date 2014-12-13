@@ -22,6 +22,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ea.core.base.CoreDefinition;
 
+/**
+ * 通过Storm发布时，如果BeanFactory放在Bolt里作为属性使用时，Storm序列化会有些问题。
+ * 这里采用一个变通的方式使用静态方法，然后在调用方定时发送一个指令，来调用AppServerBeanFactory。
+ * 
+ * @author yiyongfei
+ *
+ */
 public class AppServerBeanFactory {
 	private static Logger logger = LoggerFactory.getLogger(AppServerBeanFactory.class);
 	private static BeanFactory beanFactory;

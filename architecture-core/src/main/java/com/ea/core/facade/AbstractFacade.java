@@ -17,6 +17,12 @@ package com.ea.core.facade;
 
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Facade类，无事务控制
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractFacade implements IFacade {
 
 	/**

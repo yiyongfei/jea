@@ -29,6 +29,11 @@ import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.ORMHandle;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
+/**
+ * SQL执行，通过Hibernate完成，用于数据的新增或更新
+ * @author yiyongfei
+ *
+ */
 @Component
 public class HibernateSqlORMHandle extends AbstractORMHandle {
     
@@ -66,13 +71,13 @@ public class HibernateSqlORMHandle extends AbstractORMHandle {
 								}
 								ps.addBatch();
 							} else {
-								throw new SQLException("��������ʱ���������Ԫ�ر���Ϊ��������!");
+								throw new SQLException("执行SQL时，参数请以Object[]的方式提供!");
 							}
 							
 						}
 						ps.executeBatch();
 					} else {
-						throw new SQLException("ͨ��SQLִ����ɾ��ʱ�������������ṩ�������飬������������ṩ����Ԫ��!");
+						throw new SQLException("ͨ执行SQL时，如果是单条记录操作，参数请以Object[]的方式提供，如果多条记录操作，请提供Collection实例，实例里存放Object[]!");
 					}
 				}
 				

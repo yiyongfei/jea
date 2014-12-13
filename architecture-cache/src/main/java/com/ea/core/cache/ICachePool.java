@@ -15,6 +15,12 @@
  */
 package com.ea.core.cache;
 
+/**
+ * 缓存池，具体池参数参看IPoolConfig的说明
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface ICachePool {
 	
 	public void setMaxTotal(int maxTotal);

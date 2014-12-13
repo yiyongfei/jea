@@ -23,6 +23,13 @@ import com.ea.core.base.dto.DynamicDTO;
 import com.ea.core.base.model.BaseModel;
 import com.ea.core.kryo.AbstractSerializer;
 
+/**
+ * 序列化Object对象
+ * PS：目前在序列化HashMap和ArrayList有些问题，相应的可以替换成TreeMap和LinkedList
+ * 
+ * @author yiyongfei
+ *
+ */
 public class ObjectSerializer extends AbstractSerializer {
 
 	/**
@@ -49,6 +56,7 @@ public class ObjectSerializer extends AbstractSerializer {
 			} else {
 				this.register(obj.getClass());
 				if(obj instanceof Map){
+					//Map的处理
 					Map<String, Object> map = (Map<String, Object>)obj;
 					Set<String> keys = map.keySet();
 					for(String key : keys){
@@ -61,14 +69,26 @@ public class ObjectSerializer extends AbstractSerializer {
 						register(dto.getValue(key));
 					}
 				} else if (obj instanceof Collection){
+					//对象集合的处理
 					Collection<Object> c = (Collection<Object>) obj;
 					for(Object tmp : c){
 						register(tmp);
 					}
 				} else if (obj instanceof Object[]){
+					//对象数组的处理
 					Object[] ary = (Object[]) obj;
 					for(Object tmp : ary){
 						register(tmp);
+					}
+				} else {
+					Class<?> className = obj.getClass();
+					if(className.getName().indexOf("BeanGeneratorByCGLIB") > 0) {
+						//根据DynamicDTO获得的Bean对象的处理
+						DynamicDTO dto = new DynamicDTO(obj);
+						Set<String> keys = dto.properties();
+						for(String key : keys){
+							register(dto.getValue(key));
+						}
 					}
 				}
 			}

@@ -22,6 +22,12 @@ import com.ea.core.orm.handle.ORMConstants;
 import com.ea.core.orm.handle.ORMHandle;
 import com.ea.core.orm.handle.dto.ORMParamsDTO;
 
+/**
+ * 查询一批符合条件的数据操作，由Mybatis完成
+ * 
+ * @author yiyongfei
+ *
+ */
 @Component
 public class QueryListORMHandle extends AbstractORMHandle {
     

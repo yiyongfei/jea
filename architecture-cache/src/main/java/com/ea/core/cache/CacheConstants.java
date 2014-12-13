@@ -40,7 +40,8 @@ public class CacheConstants {
 	
 	public enum CACHE_LEVEL {
 		L1("l1.cache.", "1级缓存"),
-		L2("l2.cache.", "2级缓存");
+		L2("l2.cache.", "2级缓存"),
+		L3("l3.cache.", "3级缓存");
 		
 		private String code;
 		private String desc;

@@ -17,5 +17,11 @@ package com.ea.core.service;
 
 import java.io.Serializable;
 
+/**
+ * Service层接口
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface IService extends Serializable {
 }

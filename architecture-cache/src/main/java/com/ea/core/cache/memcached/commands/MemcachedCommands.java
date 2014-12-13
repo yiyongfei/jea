@@ -10,6 +10,12 @@ import net.rubyeye.xmemcached.MemcachedClient;
 
 import com.ea.core.cache.ICacheCommands;
 
+/**
+ * Memcached命令封装
+ * 
+ * @author yiyongfei
+ *
+ */
 public class MemcachedCommands implements ICacheCommands {
 	private MemcachedClient commands;
 	private List<InetSocketAddress> socketAddress;

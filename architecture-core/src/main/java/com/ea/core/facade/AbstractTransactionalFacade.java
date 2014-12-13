@@ -17,6 +17,13 @@ package com.ea.core.facade;
 
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Facade类，事务控制
+ * 在Facade层，子类只要继承该类，该子类的事务就交由Spring Hibernate管理
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractTransactionalFacade extends AbstractFacade {
 
 	/**

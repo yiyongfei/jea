@@ -47,6 +47,8 @@ public class DynamicDTO extends BaseModel {
 	
 	public DynamicDTO(Map<String, Object> map){
 		generator = new BeanGenerator();
+		/*使用Kryo序列化Map时，发现HashMap的序列化会报NullPointException，用TreeMap就没问题*/
+		/*考虑到可能会使用DynamicDTO来获得Map对象，实例化时使用TreeMap类型*/
 		valueMap = new TreeMap<String, Object>();
 		Iterator<String> keys = map.keySet().iterator();
 		String key = null;
@@ -81,6 +83,12 @@ public class DynamicDTO extends BaseModel {
 		valueMap.putAll(beanMap);
 	}
 	
+	/**
+	 * 若不通过Map或Model生成DynamicDTO，可通过setValue设置新生成DTO的属性和该属性的值
+	 * 
+	 * @param propName
+	 * @param value
+	 */
 	public void setValue(String propName, Object value){
 		setValue(propName, null, value);
 	}
@@ -110,6 +118,11 @@ public class DynamicDTO extends BaseModel {
 		}
 	}
 	
+	/**
+	 * 获得DynamicDTO所有属性
+	 * 
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<String> properties(){
 		if(beanMap == null){
@@ -119,6 +132,12 @@ public class DynamicDTO extends BaseModel {
 		} 
 	}
 	
+	/**
+	 * 获得DynamicDTO指定属性的Class类型
+	 * 
+	 * @param property
+	 * @return
+	 */
 	public Class getPropertyType(String property){
 		if(beanMap == null){
 			return this.valueMap.get(property).getClass();
@@ -138,10 +157,26 @@ public class DynamicDTO extends BaseModel {
 		return beanObject;
 	}
 	
+	public Object getCloneBean() {
+		try {
+			Object tmpObject = generator.create();
+			BeanMap tmpMap = BeanMap.create(tmpObject);
+			tmpMap.putAll(valueMap);
+			return tmpObject;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	public Map<String, Object> getMap(){
 		return valueMap;
 	}
 	
+	/**
+	 * 转换器，设置DynamicDTO的属性值到对应的Model对象
+	 * 
+	 * @param target
+	 */
 	@SuppressWarnings("unchecked")
 	public void convert(BaseModel target) {
 		BeanMap tmp = BeanMap.create(target);

@@ -19,6 +19,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/**
+ * 正则表达式匹配工具
+ * 
+ * @author yiyongfei
+ *
+ */
 public class RegexUtil {
 	
 	public static Set<String> matcher(String regexp, Set<String> keys){

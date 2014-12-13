@@ -2,6 +2,12 @@ package com.ea.core.cache;
 
 import java.util.Set;
 
+/**
+ * 缓存客户端命令的封装
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface ICacheCommands {
 
 	public Boolean add(String key, String value, int seconds) throws Exception;

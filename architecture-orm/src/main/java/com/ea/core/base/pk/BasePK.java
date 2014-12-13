@@ -20,6 +20,12 @@ import javax.persistence.Embeddable;
 import com.ea.core.base.pk.generator.PKGenerator;
 import com.ea.core.base.model.BaseModel;
 
+/**
+ * 主键类必须继承该类
+ * 
+ * @author yiyongfei
+ *
+ */
 @Embeddable
 public abstract class BasePK extends BaseModel {
 

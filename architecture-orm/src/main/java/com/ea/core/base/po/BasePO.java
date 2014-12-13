@@ -18,6 +18,12 @@ package com.ea.core.base.po;
 import com.ea.core.base.pk.BasePK;
 import com.ea.core.base.model.BaseModel;
 
+/**
+ * 数据对象类必须继承该类
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class BasePO extends BaseModel {
 
 	/**

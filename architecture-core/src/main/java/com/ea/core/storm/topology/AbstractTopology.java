@@ -19,6 +19,12 @@ import backtype.storm.topology.IRichSpout;
 import backtype.storm.topology.IComponent;
 import backtype.storm.topology.TopologyBuilder;
 
+/**
+ * Topology定义类
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractTopology implements ITopology{
 	/**
 	 * 

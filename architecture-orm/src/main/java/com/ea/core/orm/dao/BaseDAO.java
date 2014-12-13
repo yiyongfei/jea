@@ -20,7 +20,12 @@ import java.io.Serializable;
 import com.ea.core.base.pk.BasePK;
 import com.ea.core.base.po.BasePO;
 
-
+/**
+ * DAO层操作，默认单表的新增、修改、删除、打开操作
+ * 
+ * @author yiyongfei
+ *
+ */
 public interface BaseDAO extends Serializable {
 	public BasePK save(BasePO po) throws Exception;
 	

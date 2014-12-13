@@ -26,6 +26,12 @@ import backtype.storm.topology.TopologyBuilder;
 import com.ea.core.storm.cluster.StormCluster;
 import com.ea.core.storm.topology.ITopology;
 
+/**
+ * 用于Topology的提交
+ * 
+ * @author yiyongfei
+ *
+ */
 public abstract class AbstractSubmitTopology implements ISubmitTopology {
 	private Logger logger = LoggerFactory.getLogger(AbstractSubmitTopology.class);
 	private Config conf;
@@ -35,12 +41,14 @@ public abstract class AbstractSubmitTopology implements ISubmitTopology {
 	}
 	
 	public void submitTopology() throws Exception{
+		/*从配置文件里获取所有Topology*/
 		Collection<ITopology> topologys =  findTopologys();
 		if(topologys != null){
 			for(ITopology topology : topologys){
 				logger.info("将发布Topology:" + topology.getTopologyName());
 				TopologyBuilder builder = topology.createBuilder();
 				try {
+					/*将Topology提交到集群*/
 					cluster.submitTopology(
 							topology.getTopologyName(),  
 						    conf,  

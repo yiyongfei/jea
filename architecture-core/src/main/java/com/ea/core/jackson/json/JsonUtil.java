@@ -25,6 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonUtil {
 	private static JsonFactory factory = new ObjectMapper().getFactory();
 	
+	/**
+	 * 将对象转换成Json串
+	 * 
+	 * @param object
+	 * @return
+	 * @throws Exception
+	 */
 	public static <T> String generatorJson(T object) throws Exception{
 		StringWriter writer = new StringWriter();
 		JsonGenerator generator = factory.createGenerator(writer);
@@ -37,6 +44,14 @@ public class JsonUtil {
 		}
 	}
 	
+	/**
+	 * 将Json串转换成对象
+	 * 
+	 * @param jsonString
+	 * @param objClass
+	 * @return
+	 * @throws Exception
+	 */
 	public static <T> T parserJson(String jsonString, Class<T> objClass) throws Exception{
 		JsonParser parser = factory.createParser(jsonString);
 		try{
